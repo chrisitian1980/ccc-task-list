@@ -9,9 +9,17 @@ $(document).ready(function(){
   var $lista_principal = $('#lista-principal');
   var $producto = $('input#producto');
   var $categoria = $("select#categoria");
-
   var template = '<li class="list-group-item list-group-item-action"></li>';
 
+  $('body').delegate('button.boton-eliminar','click',function(event){
+    event.preventDefault();
+    if(confirm('¿Está usted completamente seguro@?')){
+        var $target = $(this).parent();
+        $target.slideUp(500,function(){
+          $target.remove();
+    }, );
+  }
+  });
   $formulario_de_lista.on('submit', function( event ){
     event.preventDefault();
     var texto_de_producto = $producto.val().trim();
@@ -26,6 +34,7 @@ $(document).ready(function(){
 
         '<li class="list-group-item bg-'+clase.value+' list-group-item-action">' +
         texto_de_producto +
+        '<button class="btn btn-danger btn-sm float-right boton-eliminar"><i class="fas fa-frown fa-1x"></i></button>' +
         '</li>'
       );
       $lista_principal.append( $new_row );
